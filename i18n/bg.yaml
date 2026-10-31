@@ -24,7 +24,7 @@ article:
   part_of_series: "Тази статия е част от поредица."
   part: "Част"
   this_article: "Тази Статия"
-  related_articles: "Подобни"
+  related_articles: "Свързани публикации"
   reply_by_email: "Отговори по имейл"
   reply_to: "Отговор на {{ .Title }}"
 

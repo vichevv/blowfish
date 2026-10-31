@@ -39,7 +39,8 @@ enableEmoji = true
   home = ["HTML", "RSS", "JSON"]
 
 [related]
-  threshold = 0
+  includeNewer = true
+  threshold = 80
   toLower = false
 
     [[related.indices]]
@@ -48,11 +49,11 @@ enableEmoji = true
 
     [[related.indices]]
         name = "categories"
-        weight = 100
+        weight = 70
 
     [[related.indices]]
         name = "series"
-        weight = 50
+        weight = 10
 
     [[related.indices]]
         name = "authors"

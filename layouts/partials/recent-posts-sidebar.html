@@ -1,0 +1,52 @@
+<aside class="sidebar-recent-posts p-4 bg-neutral-50 dark:bg-neutral-800/60 rounded-xl border border-neutral-200 dark:border-neutral-700/50">
+  <h3 class="text-base font-semibold mb-4 text-neutral-800 dark:text-neutral-100 uppercase tracking-wide">
+    Последни публикации
+  </h3>
+  
+  <div class="space-y-4">
+    {{ range first 5 (where .Site.RegularPages "Type" "in" .Site.Params.mainSections) }}
+      {{/* Търсене на заглавно изображение в Page Bundle (featured.*) */}}
+      {{ $image := .Resources.GetMatch "featured*" }}
+      {{ if not $image }}
+        {{/* Резервен вариант: търсене на cover.* */}}
+        {{ $image = .Resources.GetMatch "cover*" }}
+      {{ end }}
+
+      <article class="flex items-center gap-3 group">
+        {{/* Визуализация на изображението, ако съществува */}}
+        {{ if $image }}
+          {{ $thumb := $image.Fill "200x200 webp q85" }}
+          <a href="{{ .RelPermalink }}" class="shrink-0 overflow-hidden rounded-lg w-16 h-16 bg-neutral-100 dark:bg-neutral-200">
+            <img 
+              src="{{ $thumb.RelPermalink }}" 
+              alt="{{ .Title }}" 
+              width="{{ $thumb.Width }}" 
+              height="{{ $thumb.Height }}" 
+              loading="lazy"
+              class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" 
+            />
+          </a>
+        {{ else if .Params.featureimage }}
+          {{/* Ако е посочен URL път във front matter */}}
+          <a href="{{ .RelPermalink }}" class="shrink-0 overflow-hidden rounded-lg w-16 h-16 bg-neutral-100 dark:bg-neutral-200">
+            <img 
+              src="{{ .Params.featureimage | relURL }}" 
+              alt="{{ .Title }}" 
+              loading="lazy"
+              class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" 
+            />
+          </a>
+        {{ end }}
+
+        <div class="flex-1 min-w-0">
+          <a href="{{ .RelPermalink }}" class="block text-sm font-medium leading-snug text-neutral-800 dark:text-neutral-200 group-hover:text-primary-600 dark:group-hover:text-primary-400 line-clamp-2">
+            {{ .Title }}
+          </a>
+          <time class="block mt-1 text-xs text-neutral-400 dark:text-neutral-500" datetime="{{ .Date.Format "2006-01-02" }}">
+            {{ .Date.Format "02.01.2006" }}
+          </time>
+        </div>
+      </article>
+    {{ end }}
+  </div>
+</aside>
